@@ -1,2 +1,14 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using PersonalBudgeterBackend;
+
+namespace RecruBuddy
+{
+    public class PersonalBudgeterBackend
+    {
+        private static void Main()
+        {
+            using BudgeterContext db = new BudgeterContext();
+            //var ExpensesService = new ExpensesService(db);
+            //MainMenuCommands.consoleLogic(ExpensesService);
+        }
+    }
+}
