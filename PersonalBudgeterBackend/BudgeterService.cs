@@ -86,5 +86,18 @@
 
             return Expense;
         }
+
+        public Expense FindExpense(Expense ExpenseParameter) {
+            Expense Expense = _db.Budgeter.FirstOrDefault(o => (o.Name == ExpenseParameter.Name && o.Amount == ExpenseParameter.Amount));
+
+            if (Expense is null)
+            {
+                throw new Exception(
+                    "An error occured. I cannot find this job offer"
+                );
+            }
+
+            return Expense;
+        }
     }
 }
