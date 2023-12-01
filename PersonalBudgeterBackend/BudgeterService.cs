@@ -1,6 +1,6 @@
 ﻿namespace PersonalBudgeterBackend
 {
-     class BudgeterService
+    internal class BudgeterService
     {
         private readonly BudgeterContext _db;
 
@@ -14,90 +14,91 @@
             return _db.Budgeter.ToList();
         }
 
-        public void AddNewExpense(Expense Expense)
+        public void AddNewExpense(Expense expense)
         {
-            _db.Add(Expense);
+            _db.Add(expense);
             _db.SaveChanges();
         }
 
-        public void OverrideExpense(int id, Expense ExpenseToEdit)
+        public void OverrideExpense(Expense expenseToEdit)
         {
-            Expense ExpenseInDb = _db.Budgeter.FirstOrDefault(j => j.Id == id);
-            if (ExpenseInDb is null)
+            Expense? expenseInDb = _db.Budgeter.FirstOrDefault(j => j.Id == expenseToEdit.Id);
+            if (expenseInDb is null)
             {
                 throw new Exception("entry does not exist on database");
             }
             ;
-            ExpenseInDb.Name = ExpenseToEdit.Name;
-            ExpenseInDb.Amount = ExpenseToEdit.Amount;
-            ExpenseInDb.Date = ExpenseToEdit.Date;
-            ExpenseInDb.Category = ExpenseToEdit.Category;
+            expenseInDb.Name = expenseToEdit.Name;
+            expenseInDb.Amount = expenseToEdit.Amount;
+            expenseInDb.Date = expenseToEdit.Date;
+            expenseInDb.Category = expenseToEdit.Category;
 
             _db.SaveChanges();
         }
 
-        public int FindExpenseId(string idParameter)
+        //public int FindExpenseId(string idParameter)
+        //{
+        //    int idExpenseToProceed;
+
+        //    if (!int.TryParse(idParameter, out idExpenseToProceed))
+        //    {
+        //        throw new Exception("An error occured. I cannot proceed with this Expense");
+        //    }
+
+        //    List<Expense> Expenses = GetExpensesList();
+        //    for (int i = 0; i < Expenses.Count; i++)
+        //    {
+        //        if (idExpenseToProceed == Expenses[i].Id)
+        //        {
+        //            return Expenses[i].Id;
+        //        }
+        //    }
+
+        //    throw new Exception("No such Expense was found");
+        //}
+
+        public void DeleteExpense(int expenseId)
         {
-            int idExpenseToProceed;
-
-            if (!int.TryParse(idParameter, out idExpenseToProceed))
-            {
-                throw new Exception("An error occured. I cannot proceed with this Expense");
-            }
-
-            List<Expense> Expenses = GetExpensesList();
-            for (int i = 0; i < Expenses.Count; i++)
-            {
-                if (idExpenseToProceed == Expenses[i].Id)
-                {
-                    return Expenses[i].Id;
-                }
-            }
-
-            throw new Exception("No such Expense was found");
-        }
-
-        public void DeleteExpense(int ExpenseId)
-        {
-            Expense? JobOfferToProceed = _db.Budgeter.FirstOrDefault(
-                j => j.Id == ExpenseId
-            ); ;
-            if (JobOfferToProceed == null)
+            Expense? jobOfferToProceed = _db.Budgeter.FirstOrDefault(
+                j => j.Id == expenseId
+            );
+            if (jobOfferToProceed is null)
             {
                 throw new Exception("An error occured. I cannot proceed with this job offer");
             }
 
-            //MainMenuCommands.addToFile(JobOfferToProceed);
+            //MainMenuCommands.addToFile(jobOfferToProceed);
 
-            _db.Remove(JobOfferToProceed);
+            _db.Remove(jobOfferToProceed);
             _db.SaveChanges();
         }
 
         public Expense FindExpenseById(int id)
         {
-            Expense Expense = _db.Budgeter.FirstOrDefault(o => o.Id == id);
+            Expense? expense = _db.Budgeter.FirstOrDefault(o => o.Id == id);
 
-            if (Expense is null)
+            if (expense is null)
             {
                 throw new Exception(
                     "An error occured. I cannot find this job offer"
                 );
             }
 
-            return Expense;
+            return expense;
         }
 
-        public Expense FindExpense(Expense ExpenseParameter) {
-            Expense Expense = _db.Budgeter.FirstOrDefault(o => (o.Name == ExpenseParameter.Name && o.Amount == ExpenseParameter.Amount));
+        public Expense FindExpense(Expense expenseParameter)
+        {
+            Expense? expense = _db.Budgeter.FirstOrDefault(o => (o.Name == expenseParameter.Name && o.Amount == expenseParameter.Amount));
 
-            if (Expense is null)
+            if (expense is null)
             {
                 throw new Exception(
                     "An error occured. I cannot find this job offer"
                 );
             }
 
-            return Expense;
+            return expense;
         }
     }
 }

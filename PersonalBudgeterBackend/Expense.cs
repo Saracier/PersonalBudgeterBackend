@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PersonalBudgeterBackend.Category;
 
 namespace PersonalBudgeterBackend
 {
@@ -14,7 +15,7 @@ namespace PersonalBudgeterBackend
 
             Name = name;
             Amount = amount;
-            ExternalId = (new Guid()).ToString();
+            ExternalId = new Random().Next().ToString();
             Date = date;
             Category = category;
 
@@ -32,21 +33,6 @@ namespace PersonalBudgeterBackend
 
             //Date = DateTemporary;
             //Category = CategoryTemporary;
-        }
-
-        public enum CategoryEnum {
-            Food,
-            House,
-            Transport,
-            Telecomunication,
-            HealthCare,
-            Clothes,
-            Hygiene,
-            Kids,
-            Entertiment,
-            Debts,
-            Saving,
-            Other,
         }
 
         public int Id { get; set; }

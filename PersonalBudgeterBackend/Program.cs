@@ -7,8 +7,8 @@ namespace RecruBuddy
         private static void Main()
         {
             using BudgeterContext db = new BudgeterContext();
-            //var ExpensesService = new ExpensesService(db);
-            //MainMenuCommands.consoleLogic(ExpensesService);
+            var BudgeterService = new BudgeterService(db);
+            MainMenuCommands.ConsoleLogic(BudgeterService);
         }
     }
 }

@@ -9,15 +9,18 @@ namespace PersonalBudgeterBackend
 {
     internal class BudgeterContext : DbContext { 
 
-        //public BudgeterContext(DbContextOptions<BudgeterContext> options) : base(options) { }
-
         public DbSet<Expense> Budgeter { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                "Server=(localdb)\\mssqllocaldb;Database=BudgeterDb;Trusted_Connection=True;"
+                "Server=(localdb)\\mssqllocaldb;Database=BudgeterDb;Trusted_Connection=True;", builder =>
+                {
+                    builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+                }
+
             );
+            //optionsBuilder.LogTo(Console.WriteLine);
         }
     }
 }
